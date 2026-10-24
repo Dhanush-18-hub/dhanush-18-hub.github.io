@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#090f20">
+  <meta name="description" content="Codexa Technologies develops mobile games and interactive entertainment. Discover Hangman: Word Quest, our word-guessing puzzle game, and get in touch.">
+  <title>Codexa Technologies | Mobile Game Developer</title>
+  <style>
+    :root { --bg: #090f20; --surface: #101b32; --text: #f4f6ff; --muted: #b2bed5; --blue: #91b7ff; --line: #2d3b55; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 2rem; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-underline-offset: .25em; }
+    a:hover { color: var(--blue); }
+    a:focus-visible { outline: 3px solid var(--blue); outline-offset: 6px; border-radius: 3px; }
+    ::selection { background: #315fc1; color: white; }
+    .wrap { width: min(1120px, calc(100% - 64px)); margin-inline: auto; }
+    .skip-link { position: absolute; top: -100px; left: 1rem; z-index: 10; padding: .7rem 1rem; background: var(--text); color: var(--bg); }
+    .skip-link:focus { top: 1rem; color: var(--bg); }
+    .header { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding-block: 28px; border-bottom: 1px solid var(--line); }
+    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand-mark { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid #6083c4; border-radius: 12px; background: #152748; color: #b4cdff; font-size: 26px; font-weight: 750; line-height: 1; }
+    .brand-name { display: block; font-size: 21px; font-weight: 750; letter-spacing: -.6px; line-height: 1.1; }
+    .brand-sub { display: block; margin-top: 5px; color: var(--muted); font-size: 9px; font-weight: 650; letter-spacing: 2.3px; line-height: 1; }
+    .nav { display: flex; gap: 30px; align-items: center; }
+    .nav a { font-size: 14px; font-weight: 550; text-decoration: none; }
+    .nav a:last-child { padding: 9px 18px; border: 1px solid #475e86; border-radius: 7px; }
+    .eyebrow { margin: 0 0 23px; color: var(--blue); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+    .hero { position: relative; display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr); align-items: center; gap: 40px; min-height: 590px; padding-block: 80px 95px; }
+    h1 { margin: 0; font-size: clamp(44px, 5.1vw, 64px); font-weight: 700; line-height: 1.1; letter-spacing: -2.7px; }
+    h1 span { display: block; color: var(--blue); }
+    .intro { max-width: 470px; margin: 25px 0 30px; color: var(--muted); font-size: 17px; line-height: 1.85; }
+    .button { display: inline-flex; align-items: center; justify-content: center; gap: 24px; padding: 13px 22px; border: 1px solid #a7c6ff; border-radius: 7px; background: #a7c6ff; color: #0b1630; font-size: 14px; font-weight: 700; text-decoration: none; transition: background .18s ease, transform .18s ease; }
+    .button:hover { background: #c2d8ff; color: #0b1630; transform: translateY(-2px); }
+    .hero-note { margin: 18px 0 0; color: var(--muted); font-size: 12px; }
+    .puzzle-art { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; min-height: 350px; margin: 0; isolation: isolate; }
+    .orbit { position: absolute; width: 335px; height: 335px; border: 1px solid #2c446d; border-radius: 50%; background: radial-gradient(circle, #1d3760 0%, #10213d 44%, transparent 70%); z-index: -1; }
+    .orbit::after { content: ""; position: absolute; inset: -33px; border: 1px dashed #233554; border-radius: 50%; }
+    .puzzle-board { width: 100%; max-width: 390px; padding: 29px 22px 24px; border: 1px solid #40577f; border-radius: 17px; background: linear-gradient(140deg, #1b2d4d, #101c34); box-shadow: 0 30px 70px #0005; transform: rotate(-6deg); }
+    .board-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; color: #c1cee5; font-size: 10px; font-weight: 650; letter-spacing: 2px; }
+    .board-dots { letter-spacing: 5px; color: #9abaff; }
+    .tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .tile { display: grid; place-items: center; aspect-ratio: .84; border: 1px solid #748db9; border-radius: 8px; background: #253d64; color: #edf3ff; font-size: 33px; font-weight: 650; box-shadow: 0 4px 0 #090f2080; }
+    .tile.highlight { background: #a7c6ff; border-color: #c8dcff; color: #11213e; transform: translateY(-10px); }
+    .board-bottom { display: flex; align-items: center; gap: 10px; margin-top: 25px; color: #b5c4de; font-size: 11px; letter-spacing: .4px; }
+    .board-bottom::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #91b7ff; }
+    .art-spark { position: absolute; right: 13px; top: 1px; color: #a7c6ff; font-size: 44px; font-weight: 300; }
+    .art-letter { position: absolute; bottom: -3px; left: 25px; display: grid; place-items: center; width: 54px; height: 60px; border: 1px solid #40577f; border-radius: 9px; background: #14243f; color: #b5ceff; font-size: 25px; transform: rotate(12deg); box-shadow: 0 8px 20px #0003; }
+    .section-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; margin-bottom: 26px; }
+    .section-heading .eyebrow { margin: 0; }
+    .section-index { color: var(--muted); font-size: 12px; letter-spacing: 1px; }
+    .game { padding-block: 18px 76px; }
+    .game-card { display: grid; grid-template-columns: .82fr 1.25fr; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+    .game-cover { position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 320px; padding: 38px; border-right: 1px solid var(--line); background: radial-gradient(ellipse at 50% 100%, #244270 0%, #14233e 64%); }
+    .game-symbol { display: grid; place-items: center; width: 72px; height: 80px; margin-bottom: 22px; border: 1px solid #c0d6ff; border-radius: 13px; background: #a7c6ff; color: #11213e; font-size: 44px; font-weight: 750; box-shadow: 7px 7px 0 #426295; transform: rotate(-7deg); }
+    .cover-title { font-size: 29px; font-weight: 750; line-height: 1.2; letter-spacing: 3px; }
+    .cover-subtitle { margin-top: 7px; color: #c7d7f5; font-size: 12px; letter-spacing: 6px; }
+    .cover-lines { display: flex; gap: 8px; margin-top: 22px; }
+    .cover-lines i { width: 22px; height: 2px; background: #7699d1; }
+    .game-copy { align-self: center; padding: 45px 48px; }
+    .tag { display: inline-block; margin-bottom: 15px; padding: 4px 10px; border: 1px solid #49618b; border-radius: 5px; color: #c4d8ff; font-size: 10px; font-weight: 650; letter-spacing: 1.2px; text-transform: uppercase; }
+    h2 { margin: 0; font-size: clamp(28px, 3vw, 34px); font-weight: 650; line-height: 1.2; letter-spacing: -1px; }
+    .game-copy p { margin: 18px 0 24px; color: var(--muted); font-size: 15px; }
+    .text-link { display: inline-flex; gap: 14px; align-items: center; color: #b5ceff; font-size: 14px; font-weight: 600; }
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; padding-block: 58px 65px; border-top: 1px solid var(--line); }
+    .about .eyebrow { margin-bottom: 17px; }
+    .about h2 { max-width: 360px; }
+    .about-copy { align-self: center; }
+    .about-copy p { margin: 0; color: var(--muted); font-size: 16px; }
+    .about-copy p + p { margin-top: 16px; }
+    .contact { display: flex; align-items: center; justify-content: space-between; gap: 40px; margin-block: 0 72px; padding: 37px 40px; border: 1px solid #374d73; border-radius: 13px; background: linear-gradient(110deg, #172b4c, #101b32); }
+    .contact .eyebrow { margin-bottom: 12px; }
+    .contact h2 { font-size: 29px; }
+    .contact p { margin: 12px 0 0; color: var(--muted); font-size: 14px; }
+    .email { display: inline-flex; align-items: center; gap: 20px; padding-block: 10px; color: #d5e3ff; font-size: clamp(17px, 2vw, 21px); font-weight: 550; overflow-wrap: anywhere; }
+    .footer { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-block: 26px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .footer p { margin: 0; }
+    .footer a { color: var(--muted); }
+    @media (max-width: 900px) {
+      .hero { gap: 20px; }
+      h1 { font-size: 49px; }
+      .puzzle-board { padding-inline: 17px; }
+      .orbit { width: 260px; height: 260px; }
+      .tile { font-size: 27px; }
+      .game-copy { padding: 32px; }
+      .about { gap: 40px; }
+      .contact { flex-direction: column; align-items: flex-start; gap: 15px; }
+    }
+    @media (max-width: 650px) {
+      .wrap { width: calc(100% - 40px); }
+      .header { flex-wrap: wrap; gap: 22px; padding-block: 23px; }
+      .nav { width: 100%; justify-content: space-between; gap: 16px; }
+      .nav a { font-size: 13px; }
+      .nav a:last-child { padding: 7px 14px; }
+      .hero { grid-template-columns: minmax(0, 1fr); gap: 20px; padding-block: 56px 54px; min-height: auto; }
+      h1 { font-size: clamp(40px, 9vw, 55px); letter-spacing: -1.8px; }
+      .intro { font-size: 16px; }
+      .puzzle-art { min-height: 320px; margin: 20px 18px 0; }
+      .puzzle-board { max-width: 340px; }
+      .orbit { width: 245px; height: 245px; }
+      .orbit::after { inset: -24px; }
+      .art-letter { left: 7px; bottom: -4px; }
+      .art-spark { right: -2px; top: -4px; }
+      .game { padding-bottom: 46px; }
+      .game-card { grid-template-columns: 1fr; }
+      .game-cover { min-height: 275px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .game-copy { padding: 30px 25px; }
+      .about { grid-template-columns: 1fr; gap: 25px; padding-block: 40px 46px; }
+      .contact { padding: 28px 24px; margin-bottom: 44px; }
+      .contact h2 { font-size: 26px; }
+      .email { gap: 12px; font-size: 17px; }
+      .footer { align-items: flex-start; flex-direction: column; gap: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .button { transition: none; }
+      .button:hover { transform: none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="header wrap">
+    <a class="brand" href="#top" aria-label="Codexa Technologies home">
+      <span class="brand-mark" aria-hidden="true">c</span>
+      <span><span class="brand-name">codexa</span><span class="brand-sub">TECHNOLOGIES</span></span>
+    </a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#games">Our game</a>
+      <a href="#about">About us</a>
+      <a href="#contact">Get in touch <span aria-hidden="true">&#8599;</span></a>
+    </nav>
+  </header>
+  <main id="main" class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow">A world of play, in your pocket</p>
+        <h1 id="hero-title">Small moments.<span>Great play.</span></h1>
+        <p class="intro">We're Codexa Technologies. We develop mobile games and interactive entertainment that turn a little curiosity into a moment of play.</p>
+        <a class="button" href="#games">Explore our game <span aria-hidden="true">&#8594;</span></a>
+        <p class="hero-note">A new word. A fresh challenge. Your next little adventure.</p>
+      </div>
+      <div class="puzzle-art" aria-hidden="true">
+        <div class="orbit"></div>
+        <span class="art-spark">&#10022;</span>
+        <div class="puzzle-board">
+          <div class="board-top"><span>A LITTLE WORDPLAY</span><span class="board-dots">&#8226;&#8226;&#8226;</span></div>
+          <div class="tiles">
+            <span class="tile">Q</span><span class="tile">U</span><span class="tile highlight">E</span><span class="tile">S</span><span class="tile">T</span>
+          </div>
+          <div class="board-bottom">Every letter is a possibility.</div>
+        </div>
+        <span class="art-letter">A</span>
+      </div>
+    </section>
+    <section id="games" class="game" aria-labelledby="game-title">
+      <div class="section-heading">
+        <p class="eyebrow">Meet our game</p>
+        <span class="section-index" aria-hidden="true">01 / WORDPLAY</span>
+      </div>
+      <article class="game-card">
+        <div class="game-cover" aria-hidden="true">
+          <div class="game-symbol">H</div>
+          <div class="cover-title">HANGMAN</div>
+          <div class="cover-subtitle">WORD QUEST</div>
+          <div class="cover-lines"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="game-copy">
+          <span class="tag">Word-guessing puzzle game</span>
+          <h2 id="game-title">Hangman: Word Quest</h2>
+          <p>A familiar challenge, one letter at a time. Put your word knowledge to work as you guess letters and uncover the hidden word in our mobile puzzle game.</p>
+          <a class="text-link" href="https://dhanush-18-hub.github.io/hangman-word-quest-privacy/">Read the game's privacy policy <span aria-hidden="true">&#8599;</span></a>
+        </div>
+      </article>
+    </section>
+    <section id="about" class="about" aria-labelledby="about-title">
+      <div>
+        <p class="eyebrow">The people behind the play</p>
+        <h2 id="about-title">Curiosity is a good place to start.</h2>
+      </div>
+      <div class="about-copy">
+        <p>Codexa Technologies is a developer and publisher of mobile games. Our focus is simple: creating interactive entertainment that invites you to pause, think, and play.</p>
+        <p>Hangman: Word Quest brings that idea to a classic word-guessing puzzle. Have a thought about the game? We'd like to hear it.</p>
+      </div>
+    </section>
+    <section id="contact" class="contact" aria-labelledby="contact-title">
+      <div>
+        <p class="eyebrow">Let's talk</p>
+        <h2 id="contact-title">A question, an idea, a hello.</h2>
+        <p>For game support, feedback, or business enquiries, email us.</p>
+      </div>
+      <a class="email" href="mailto:codexa393@gmail.com">codexa393@gmail.com <span aria-hidden="true">&#8599;</span></a>
+    </section>
+  </main>
+  <footer class="footer wrap">
+    <p>&copy; Codexa Technologies. Made for moments of play.</p>
+    <a href="https://dhanush-18-hub.github.io/hangman-word-quest-privacy/">Hangman: Word Quest privacy policy</a>
+  </footer>
+</body>
+</html>
